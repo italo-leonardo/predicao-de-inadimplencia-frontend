@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulário de Empréstimo</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <main>
-        <section aria-labelledby="titulo-formulario">
+    <main class="container">
+        <section class="card" aria-labelledby="titulo-formulario">
             <h1 id="titulo-formulario">Cadastro de Informações de Empréstimo</h1>
 
             <!-- Removi action="#" porque JS fará o envio -->
@@ -17,50 +17,50 @@
                 <fieldset>
                     <legend>Informações Financeiras</legend>
 
-                    <label for="loan_amount">Loan Amount:</label>
+                    <label for="loan_amount">Valor do Empréstimo:</label>
                     <input type="number" id="loan_amount" name="loan_amount" step="0.01" required>
 
-                    <label for="funded_amount_investor">Funded Amount Investor:</label>
+                    <label for="funded_amount_investor">Valor Financiado pelo Investidor:</label>
                     <input type="number" id="funded_amount_investor" name="funded_amount_investor" step="0.01" required>
 
-                    <label for="interest_rate">Interest Rate (%):</label>
+                    <label for="interest_rate">Taxa de Juros (%):</label>
                     <input type="number" id="interest_rate" name="interest_rate" step="0.01" min="0" max="100" required>
 
-                    <label for="debt_to_income">Debt to Income:</label>
+                    <label for="debt_to_income">Relação Dívida/Renda:</label>
                     <input type="number" id="debt_to_income" name="debt_to_income" step="0.01" required>
 
-                    <label for="open_account">Open Accounts:</label>
+                    <label for="open_account">Contas Abertas:</label>
                     <input type="number" id="open_account" name="open_account" min="0" required>
 
-                    <label for="total_accounts">Total Accounts:</label>
+                    <label for="total_accounts">Total de Contas:</label>
                     <input type="number" id="total_accounts" name="total_accounts" min="0" required>
 
-                    <label for="total_received_interest">Total Received Interest:</label>
+                    <label for="total_received_interest">Juros Totais Recebidos:</label>
                     <input type="number" id="total_received_interest" name="total_received_interest" step="0.01">
 
-                    <label for="total_received_late_fee">Total Received Late Fee:</label>
+                    <label for="total_received_late_fee">Multas por Atraso Recebidas:</label>
                     <input type="number" id="total_received_late_fee" name="total_received_late_fee" step="0.01">
 
-                    <label for="recoveries">Recoveries:</label>
+                    <label for="recoveries">Recuperações:</label>
                     <input type="number" id="recoveries" name="recoveries" step="0.01">
 
-                    <label for="collection_recovery_fee">Collection Recovery Fee:</label>
+                    <label for="collection_recovery_fee">Taxa de Recuperação de Cobrança:</label>
                     <input type="number" id="collection_recovery_fee" name="collection_recovery_fee" step="0.01">
 
-                    <label for="last_week_pay">Last Week Pay:</label>
+                    <label for="last_week_pay">Último Pagamento (semanas):</label>
                     <input type="number" id="last_week_pay" name="last_week_pay" step="0.01">
 
-                    <label for="total_collection_amount">Total Collection Amount:</label>
+                    <label for="total_collection_amount">Total em Cobrança:</label>
                     <input type="number" id="total_collection_amount" name="total_collection_amount" step="0.01">
 
-                    <label for="total_current_balance">Total Current Balance:</label>
+                    <label for="total_current_balance">Saldo Atual Total:</label>
                     <input type="number" id="total_current_balance" name="total_current_balance" step="0.01">
                 </fieldset>
 
                 <fieldset>
                     <legend>Informações do Empréstimo</legend>
 
-                    <label for="grade">Grade:</label>
+                    <label for="grade">Nota:</label>
                     <select id="grade" name="grade" required>
                         <option value="">Selecione...</option>
                         <option value="A">A</option>
@@ -72,7 +72,7 @@
                         <option value="G">G</option>
                     </select>
 
-                    <label for="sub_grade">Sub Grade:</label>
+                    <label for="sub_grade">Subnota:</label>
                     <select id="sub_grade" name="sub_grade" required>
                         <option value="">Selecione...</option>
                         <option value="A">A1</option>
@@ -112,26 +112,26 @@
                         <option value="A">G5</option>
                     </select>
 
-                    <label for="employment_duration">Employment Duration:</label>
+                    <label for="employment_duration">Tempo de Emprego:</label>
                     <select id="employment_duration" name="employment_duration" required>
                         <option value="">Selecione...</option>
-                        <option value="MORTGAGE">MORTGAGE</option>
-                        <option value="RENT">RENT</option>
-                        <option value="OWN">OWN</option>
+                        <option value="MORTGAGE">MORTGAGE (Financiado)</option>
+                        <option value="RENT">RENT (Alugado)</option>
+                        <option value="OWN">OWN (Próprio)</option>
                     </select>
 
-                    <label for="home_ownership">Home Ownership (Qtd):</label>
+                    <label for="home_ownership">Propriedades Residenciais (Qtd):</label>
                     <input type="number" id="home_ownership" name="home_ownership" min="0" required>
 
-                    <label for="verification_status">Verification Status:</label>
+                    <label for="verification_status">Status de Verificação:</label>
                     <select id="verification_status" name="verification_status" required>
                         <option value="">Selecione...</option>
-                        <option value="Not Verified">Not Verified</option>
-                        <option value="Source Verified">Source Verified</option>
-                        <option value="Verified">Verified</option>
+                        <option value="Not Verified">Não Verificado</option>
+                        <option value="Source Verified">Fonte Verificada</option>
+                        <option value="Verified">Verificado</option>
                     </select>
 
-                    <label for="initial_list_status">Initial List Status:</label>
+                    <label for="initial_list_status">Status Inicial da Lista:</label>
                     <select id="initial_list_status" name="initial_list_status" required>
                         <option value="">Selecione...</option>
                         <option value="W">W</option>
@@ -139,7 +139,7 @@
                     </select>
                 </fieldset>
 
-                <button type="submit">Enviar</button>
+                <button type="submit" class="btn">Enviar</button>
             </form>
         </section>
     </main>
