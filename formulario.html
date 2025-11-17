@@ -26,6 +26,9 @@
                     <label for="interest_rate">Interest Rate (%):</label>
                     <input type="number" id="interest_rate" name="interest_rate" step="0.01" min="0" max="100" required>
 
+                    <label for="salary">Salary:</label>
+                    <input type="number" id="salary" name="salary" step="0.01" required>
+
                     <label for="debt_to_income">Debt to Income:</label>
                     <input type="number" id="debt_to_income" name="debt_to_income" step="0.01" required>
 
@@ -53,8 +56,8 @@
                     <label for="total_collection_amount">Total Collection Amount:</label>
                     <input type="number" id="total_collection_amount" name="total_collection_amount" step="0.01">
 
-                    <label for="total_current_balance">Total Current Balance:</label>
-                    <input type="number" id="total_current_balance" name="total_current_balance" step="0.01">
+                    <label for="balance">Balance:</label>
+                    <input type="number" id="balance" name="balance" step="0.01" required>
                 </fieldset>
 
                 <fieldset>
@@ -112,16 +115,21 @@
                         <option value="A">G5</option>
                     </select>
 
-                    <label for="employment_duration">Employment Duration:</label>
+                    <!-- <label for="employment_duration">Employment Duration:</label>
                     <select id="employment_duration" name="employment_duration" required>
                         <option value="">Selecione...</option>
                         <option value="MORTGAGE">MORTGAGE</option>
                         <option value="RENT">RENT</option>
                         <option value="OWN">OWN</option>
-                    </select>
+                    </select> -->
 
-                    <label for="home_ownership">Home Ownership (Qtd):</label>
-                    <input type="number" id="home_ownership" name="home_ownership" min="0" required>
+                    <label for="home_ownership">Home Ownership:</label>
+                    <select id="home_ownership" name="home_ownership" required>
+                            <option value="">Selecione...</option>
+                            <option value="MORTGAGE">MORTGAGE</option>
+                            <option value="RENT">RENT</option>
+                            <option value="OWN">OWN</option>
+                    </select>
 
                     <label for="verification_status">Verification Status:</label>
                     <select id="verification_status" name="verification_status" required>
