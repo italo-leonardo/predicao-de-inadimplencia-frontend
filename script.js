@@ -1,61 +1,77 @@
 // script.js
-// Lógica de envio do formulário e simulação de resposta de predição
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
+
     const form = document.querySelector("form");
     if (!form) return;
 
-    form.addEventListener("submit", async (event) => {
+    form.addEventListener("submit", async function (event) {
         event.preventDefault(); // impede recarregar página
 
-        // Coleta dos dados do formulário
+        // Coletar os valores do formulário
         const formData = new FormData(form);
+
+        // MAPEAMENTO do nome do campo HTML → nome esperado pelo backend
+        const mapping = {
+            "loan_amount": "Amount",
+            "funded_amount_investor": "Funded Amount Investor",
+            "interest_rate": "Interest Rate",
+            "salary": "Salary",
+            "debt_to_income": "Debit to Income",
+            "open_account": "Open Account",
+            "total_accounts": "Total Accounts",
+            "total_received_interest": "Total Received Interest",
+            "total_received_late_fee": "Total Received Late Fee",
+            "recoveries": "Recoveries",
+            "collection_recovery_fee": "Collection Recovery Fee",
+            "last_week_pay": "Last week Pay",
+            "total_collection_amount": "Total Collection Amount",
+            "balance": "Balance",
+            "grade": "Grade",
+            "sub_grade": "Sub Grade",
+            "home_ownership": "HomeOwnership",
+            "verification_status": "Verification Status",
+            "initial_list_status": "Initial List Status"
+        };
+
         const payload = {};
 
+        // Criando JSON final com os nomes exatos do backend
         formData.forEach((value, key) => {
+            const backendKey = mapping[key];
+            if (!backendKey) return;
+
+            // Converte números automaticamente
             if (!isNaN(value) && value.toString().trim() !== "") {
-                payload[key] = Number(value);
+                payload[backendKey] = Number(value);
             } else {
-                payload[key] = value;
+                payload[backendKey] = value;
             }
         });
 
-        console.log("Payload preparado para envio:", payload);
+        console.log("JSON enviado:", payload);
 
-        let prediction;
         try {
-            // Chamada placeholder para ilustrar requisição.
-            // Substitua a URL abaixo pela API real quando disponível.
             const response = await fetch("https://httpbin.org/post", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload)
             });
 
-            const backendEcho = await response.json();
-            console.log("Eco do backend:", backendEcho);
+            const result = await response.json();
+            console.log("Resposta do backend:", result);
 
-            // Como httpbin não retorna predição, geramos uma simulação.
-            prediction = {
-                default: Math.random() < 0.5 ? 1 : 0,
-                probability: Math.random()
-            };
+            // Mostrando o resultado (placeholder)
+            alert(
+                "Resultado: " +
+                (result.default === 1 ? "Inadimplente" : "Adimplente") +
+                "\nProbabilidade: " +
+                (result.probability * 100).toFixed(2) + "%"
+            );
+
         } catch (erro) {
             console.error("Erro ao conectar com a API:", erro);
             alert("Erro ao conectar com a API. Verifique se ela está rodando.");
-            return;
         }
-
-        // Persistir resultado para leitura em resultado.html
-        localStorage.setItem("resultado_api", JSON.stringify(prediction));
-
-        // Feedback rápido antes de redirecionar
-        alert(
-            "Resultado: " +
-            (prediction.default === 1 ? "Inadimplente" : "Adimplente") +
-            "\nProbabilidade: " + (prediction.probability * 100).toFixed(2) + "%"
-        );
-
-        // Redireciona para página de resultado
-        window.location.href = "resultado.html";
     });
+
 });
