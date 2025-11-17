@@ -51,26 +51,34 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("JSON enviado:", payload);
 
         try {
-            const response = await fetch("https://httpbin.org/post", {
+            const response = await fetch("http://127.0.0.1:8000/predict", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload)
             });
 
             const result = await response.json();
-            console.log("Resposta do backend:", result);
+            console.log("Resposta API:", result);
 
             // Mostrando o resultado (placeholder)
-            alert(
-                "Resultado: " +
-                (result.default === 1 ? "Inadimplente" : "Adimplente") +
-                "\nProbabilidade: " +
-                (result.probability * 100).toFixed(2) + "%"
-            );
+        //     alert(
+        //         "Resultado: " +
+        //         (result.default === 1 ? "Inadimplente" : "Adimplente") +
+        //         "\nProbabilidade: " +
+        //         (result.probability * 100).toFixed(2) + "%"
+        //     );
 
-        } catch (erro) {
-            console.error("Erro ao conectar com a API:", erro);
-            alert("Erro ao conectar com a API. Verifique se ela está rodando.");
+        // } catch (erro) {
+        //     console.error("Erro ao conectar com a API:", erro);
+        //     alert("Erro ao conectar com a API. Verifique se ela está rodando.");
+        // }
+
+        localStorage.setItem("resultado_api", JSON.stringify(result));
+        window.location.href = "resultado.html";
+
+        } catch (error) {
+            console.error("Erro:", error);
+            alert("Erro ao conectar com o servidor.");
         }
     });
 
