@@ -5,12 +5,10 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!form) return;
 
     form.addEventListener("submit", async function (event) {
-        event.preventDefault(); // impede recarregar página
+        event.preventDefault();
 
-        // Coletar os valores do formulário
         const formData = new FormData(form);
 
-        // MAPEAMENTO do nome do campo HTML → nome esperado pelo backend
         const mapping = {
             "loan_amount": "Amount",
             "funded_amount_investor": "Funded Amount Investor",
@@ -35,13 +33,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const payload = {};
 
-        // Criando JSON final com os nomes exatos do backend
         formData.forEach((value, key) => {
             const backendKey = mapping[key];
             if (!backendKey) return;
 
-            // Converte números automaticamente
-            if (!isNaN(value) && value.toString().trim() !== "") {
+            if (!isNaN(value) && value.trim() !== "") {
                 payload[backendKey] = Number(value);
             } else {
                 payload[backendKey] = value;
@@ -51,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("JSON enviado:", payload);
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/predict", {
+            const response = await fetch("http://127.0.0.1:8000/api/predict/", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload)
@@ -60,21 +56,11 @@ document.addEventListener("DOMContentLoaded", function () {
             const result = await response.json();
             console.log("Resposta API:", result);
 
-            // Mostrando o resultado (placeholder)
-        //     alert(
-        //         "Resultado: " +
-        //         (result.default === 1 ? "Inadimplente" : "Adimplente") +
-        //         "\nProbabilidade: " +
-        //         (result.probability * 100).toFixed(2) + "%"
-        //     );
+            // 🔥 SALVA COM O NOME CORRETO!
+            localStorage.setItem("resultadoPredicao", JSON.stringify(result));
 
-        // } catch (erro) {
-        //     console.error("Erro ao conectar com a API:", erro);
-        //     alert("Erro ao conectar com a API. Verifique se ela está rodando.");
-        // }
-
-        localStorage.setItem("resultado_api", JSON.stringify(result));
-        window.location.href = "resultado.html";
+            // Redireciona
+            window.location.href = "resultado.html";
 
         } catch (error) {
             console.error("Erro:", error);

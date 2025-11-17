@@ -1,22 +1,28 @@
-// Lê dados salvos pelo script.js
 document.addEventListener("DOMContentLoaded", () => {
+    const resultadoBruto = localStorage.getItem("resultadoPredicao");
+    console.log("Resultado recebido:", resultadoBruto);
 
-    const resultado = JSON.parse(localStorage.getItem("resultado_api"));
-
-    if (!resultado) {
-        document.getElementById("status").innerText = "Nenhuma análise encontrada.";
-        return;
+    if (!resultadoBruto) {
+        document.getElementById("status").textContent =
+            "Erro: não foi possível carregar o resultado.";
+        document.getElementById("probabilidade").textContent = "";
+        return; // aqui está DENTRO da função, agora é permitido
     }
 
-    // Texto do status
-    const textoStatus = resultado.default === 1 
-        ? "Cliente com risco de inadimplência" 
-        : "Cliente com baixa probabilidade de inadimplência";
+    const resultado = JSON.parse(resultadoBruto);
 
-    document.getElementById("status").innerText = textoStatus;
+    // Escolhe o texto certo baseado na predição
+    let textoStatus = "";
+    if (resultado.predicao_classe === 1) {
+        textoStatus = "Cliente com alta probabilidade de inadimplência";
+    } else {
+        textoStatus = "Cliente com baixa probabilidade de inadimplência";
+    }
 
-    // Probabilidade formatada
-    const prob = (resultado.probability * 100).toFixed(2) + "%";
-    document.getElementById("probabilidade").innerText = "Probabilidade: " + prob;
+    document.getElementById("status").textContent = textoStatus;
 
+    // Probabilidade
+    const prob = (resultado.probabilidade_inadimplencia * 100).toFixed(2);
+    document.getElementById("probabilidade").textContent =
+        `Probabilidade: ${prob}%`;
 });
