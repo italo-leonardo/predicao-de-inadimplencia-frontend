@@ -6,6 +6,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
     form.addEventListener("submit", async function (event) {
         event.preventDefault(); // impede recarregar página
+        const submitBtn = document.getElementById("submit-btn");
+        if (submitBtn) submitBtn.setAttribute("aria-busy", "true");
+
+        // Validação simples: marcar campos vazios
+        const invalids = [];
+        form.querySelectorAll("input[required], select[required]").forEach(el => {
+            const empty = (el.value === null || el.value === "");
+            el.style.borderColor = empty ? "#ef4444" : "var(--border)";
+            if (empty) invalids.push(el);
+        });
+        if (invalids.length) {
+            alert("Por favor, preencha os campos obrigatórios.");
+            if (submitBtn) submitBtn.removeAttribute("aria-busy");
+            invalids[0].focus();
+            return;
+        }
 
         // Coletar os valores do formulário
         const formData = new FormData(form);
@@ -60,18 +76,22 @@ document.addEventListener("DOMContentLoaded", function () {
             const result = await response.json();
             console.log("Resposta do backend:", result);
 
-            // Mostrando o resultado (placeholder)
-            alert(
-                "Resultado: " +
-                (result.default === 1 ? "Inadimplente" : "Adimplente") +
-                "\nProbabilidade: " +
-                (result.probability * 100).toFixed(2) + "%"
-            );
+            // Simula retorno do backend (httpbin ecoa os dados). Vamos criar um resultado fake
+            const fake = {
+                default: Math.random() < 0.5 ? 1 : 0,
+                probability: Number((0.5 + Math.random() * 0.5).toFixed(2))
+            };
+
+            // Salva no localStorage e navega para resultado
+            localStorage.setItem("resultado_api", JSON.stringify(fake));
+            window.location.href = "resultado.html";
 
         } catch (erro) {
             console.error("Erro ao conectar com a API:", erro);
             alert("Erro ao conectar com a API. Verifique se ela está rodando.");
         }
+
+        if (submitBtn) submitBtn.removeAttribute("aria-busy");
     });
 
 });

@@ -13,7 +13,13 @@ document.addEventListener("DOMContentLoaded", () => {
         ? "Cliente com risco de inadimplência" 
         : "Cliente com baixa probabilidade de inadimplência";
 
-    document.getElementById("status").innerText = textoStatus;
+    const statusEl = document.getElementById("status");
+    statusEl.innerText = textoStatus;
+    const badge = document.createElement('span');
+    badge.className = 'badge ' + (resultado.default === 1 ? 'danger' : 'success');
+    badge.textContent = resultado.default === 1 ? 'Risco' : 'Baixo risco';
+    statusEl.appendChild(document.createTextNode(' '));
+    statusEl.appendChild(badge);
 
     // Probabilidade formatada
     const prob = (resultado.probability * 100).toFixed(2) + "%";
